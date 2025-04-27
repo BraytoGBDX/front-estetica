@@ -9,6 +9,8 @@ import ClientesAdmin from './components/ClientesAdmin.vue'
 import Tratamientos from './components/Tratamientos.vue'
 import Citas from './components/Citas.vue'
 
+import CitasCliente from './components/CitasCliente.vue'
+
 const routes = [
   {
     path: '/',
@@ -33,6 +35,8 @@ const routes = [
   { path: '/clientes', component: ClientesAdmin },
   { path: '/citas', component: Citas },
   { path: '/tratamientos', component: Tratamientos },
+  { path: '/citasCliente', component: CitasCliente },
+
 ];
 
 const router = createRouter({

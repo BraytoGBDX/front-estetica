@@ -10,11 +10,11 @@
                 @click.prevent="navegar('/cliente')">
                 Dashboard
             </a>
-            <a href="#" class="nav-link" :class="{ active: rutaActual === '/citas' }"
-                @click.prevent="navegar('/citas')">
+            <a href="#" class="nav-link" :class="{ active: rutaActual === '/citascliente' }"
+                @click.prevent="navegar('/citasCliente')">
                 Citas
             </a>
-            <a href="#" class="nav-link" :class="{ active: rutaActual === '/perfil' }"
+            <a href="#" class="nav-link" :class="{ active: rutaActual === '/perfilCliente' }"
                 @click.prevent="navegar('/perfil')">
                 Perfil
             </a>
