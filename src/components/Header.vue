@@ -59,7 +59,7 @@ function irADashboard() {
 // Función de logout
 function logout() {
   localStorage.removeItem('token'); // Borra el token
-  router.push('/login'); // Redirige al login
+  router.push('/'); // Redirige al login
 }
 
 // Para marcar activo el link
