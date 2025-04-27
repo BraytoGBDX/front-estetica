@@ -5,6 +5,10 @@ import AdminDashboard from './components/AdminDashboard.vue'; // Vista del admin
 import Register from './components/Register.vue'; // Vista de registro
 import ClienteDashboard from './components/ClienteDashboard.vue'
 
+import ClientesAdmin from './components/ClientesAdmin.vue'
+import Tratamientos from './components/Tratamientos.vue'
+import Citas from './components/Citas.vue'
+
 const routes = [
   {
     path: '/',
@@ -26,6 +30,9 @@ const routes = [
     name: 'cliente-dashboard', 
     component: ClienteDashboard, 
   },
+  { path: '/clientes', component: ClientesAdmin },
+  { path: '/citas', component: Citas },
+  { path: '/tratamientos', component: Tratamientos },
 ];
 
 const router = createRouter({
