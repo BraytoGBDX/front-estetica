@@ -1,4 +1,5 @@
 <template>
+  <ClienteHeader />
     <div class="dashboard-container">
       <div class="dashboard-header">
         <h1 class="dashboard-title">DashCliente</h1>
@@ -10,6 +11,7 @@
   </template>
   
   <script setup>
+  import ClienteHeader from './ClientesHeader.vue';
   // Puedes agregar funcionalidades adicionales aquí más tarde
   </script>
   
