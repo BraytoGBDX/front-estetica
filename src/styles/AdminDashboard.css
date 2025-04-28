@@ -1,0 +1,84 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .contenido-dashboard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem;
+    padding-top: 70px; /* Para que el contenido no quede debajo del header fijo */
+  }
+  
+  .calendario-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  
+  .calendario {
+    flex: 2;
+    max-width: 80%; /* Hacemos el calendario un poco más grande */
+    min-height: 600px; /* Aseguramos que tenga suficiente altura */
+  }
+  
+  .estatus-leyenda {
+    flex: 1;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .estatus-leyenda h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .estatus-leyenda ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .estatus-leyenda li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .estatus-leyenda span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+  }
+  
+  .estatus-confirmada {
+    background-color: green;
+  }
+  
+  .estatus-pendiente {
+    background-color: orange;
+  }
+  
+  .estatus-cancelada {
+    background-color: red;
+  }
+  
+  /* Estilos personalizados para Vue Cal */
+  .vuecal__cell--confirmada {
+    background-color: rgba(0, 128, 0, 0.2); /* Verde claro para confirmada */
+  }
+  
+  .vuecal__cell--pendiente {
+    background-color: rgba(255, 165, 0, 0.2); /* Naranja claro para pendiente */
+  }
+  
+  .vuecal__cell--cancelada {
+    background-color: rgba(255, 0, 0, 0.2); /* Rojo claro para cancelada */
+  }

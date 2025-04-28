@@ -87,6 +87,23 @@
     const token = localStorage.getItem('access_token');
     const userId = JSON.parse(atob(token.split('.')[1])).id;  // Extraer el ID (id) del token
 
+    function generarFechaRandom() {
+  // Fecha actual
+  const fechaActual = new Date();
+
+  // Fecha un mes hacia adelante
+  const fechaFutura = new Date();
+  fechaFutura.setMonth(fechaActual.getMonth() + 1);
+
+  // Generar un número aleatorio de milisegundos entre las fechas
+  const fechaRandom = new Date(fechaActual.getTime() + Math.random() * (fechaFutura.getTime() - fechaActual.getTime()));
+
+  // Retornar la fecha en formato YYYY-MM-DD
+  return fechaRandom.toISOString().split('T')[0];
+
+}
+const fechaAleatoria = generarFechaRandom()
+
     const response = await fetch(`http://127.0.0.1:8000/citas/?user_id=${userId}`, {
       method: 'POST',
       headers: {
@@ -96,9 +113,9 @@
       body: JSON.stringify({
         idUsuario: userId,
         idTratamiento: tratamientoId,
-        estatus: 'pendiente',
+        estatus: 'Pendiente',
         horario: new Date().toISOString().split('T')[1],  // Obtén solo la hora (HH:mm:ss)
-        fecha: new Date().toISOString().split('T')[0],  // Fecha de hoy (YYYY-MM-DD)
+        fecha: fechaAleatoria,  // Fecha de hoy (YYYY-MM-DD)
       }),
     });
 

@@ -1,12 +1,13 @@
-<!-- src/views/Dashboard.vue -->
 <template>
   <div class="dashboard">
     <Header />
     <div class="contenido-dashboard">
       <div class="calendario-contenedor">
         <!-- Calendario -->
-        <vue-cal class="calendario" :events="eventos" :on-event-click="onEventClick" :time="false" default-view="month"
-          :hide-title-bar="false"></vue-cal>
+        <vue-cal class="calendario" :events="eventos" :on-event-click="onEventClick" :time="false"
+          :hide-title-bar="false" default-view="month" 
+          :disable-views="['years', 'year', 'week', 'day', '24hours']" 
+          ></vue-cal>
 
         <!-- Significado de estatus -->
         <div class="estatus-leyenda">
@@ -27,117 +28,45 @@ import Header from './Header.vue'; // Importa tu Header
 import VueCal from 'vue-cal'; // Importa Vue Cal
 import 'vue-cal/dist/vuecal.css'; // Importa los estilos de Vue Cal
 
+import { ref, onMounted } from 'vue';
+
 // Eventos del calendario (citas)
-const eventos = [
-  {
-    start: '2025-04-27',
-    end: '2025-04-27',
-    title: 'Juan Pérez - Tratamiento Facial',
-    class: 'confirmada',
-  },
-  {
-    start: '2025-04-28',
-    end: '2025-04-28',
-    title: 'Ana Gómez - Limpieza Dental',
-    class: 'pendiente',
-  },
-  {
-    start: '2025-04-29',
-    end: '2025-04-29',
-    title: 'Carlos López - Masaje Relajante',
-    class: 'cancelada',
-  },
-];
+const eventos = ref([]);
+
+// Función para cargar las citas desde el servidor
+const loadCitas = async () => {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await fetch('http://127.0.0.1:8000/citas', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // Procesar las citas y convertirlas al formato esperado por Vue Cal
+      eventos.value = data.map((cita) => ({
+        start: cita.fecha, // Asumiendo que 'fecha' es de tipo 'YYYY-MM-DD'
+        end: cita.fecha,   // Si no tienes hora, puedes poner la misma fecha en 'end'
+        title: `${cita.nombreUsuario} - ${cita.tratamiento}`,
+        class: cita.estatus === 'confirmada' ? 'confirmada' : cita.estatus === 'pendiente' ? 'pendiente' : 'cancelada',
+      }));
+    } else {
+      console.error('Error al cargar las citas', response.status);
+    }
+  } catch (error) {
+    console.error('Error al hacer la solicitud GET', error);
+  }
+};
 
 // Función para manejar clics en eventos
 function onEventClick(event) {
   console.log('Evento clicado:', event.event);
 }
+
+// Cargar las citas cuando el componente se monta
+onMounted(() => {
+  loadCitas();
+});
 </script>
 
-<style scoped>
-.dashboard {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.contenido-dashboard {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 2rem;
-  padding-top: 70px;
-  /* Para que el contenido no quede debajo del header fijo */
-}
-
-.calendario-contenedor {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-}
-
-.calendario {
-  flex: 2;
-  max-width: 70%;
-}
-
-.estatus-leyenda {
-  flex: 1;
-  background-color: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.estatus-leyenda h3 {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.estatus-leyenda ul {
-  list-style: none;
-  padding: 0;
-}
-
-.estatus-leyenda li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.estatus-leyenda span {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 0.5rem;
-  border-radius: 50%;
-}
-
-.estatus-confirmada {
-  background-color: green;
-}
-
-.estatus-pendiente {
-  background-color: orange;
-}
-
-.estatus-cancelada {
-  background-color: red;
-}
-
-/* Estilos personalizados para Vue Cal */
-.vuecal__cell--confirmada {
-  background-color: rgba(0, 128, 0, 0.2);
-}
-
-.vuecal__cell--pendiente {
-  background-color: rgba(255, 165, 0, 0.2);
-}
-
-.vuecal__cell--cancelada {
-  background-color: rgba(255, 0, 0, 0.2);
-}
-</style>
+<style src="../styles/AdminDashboard.css"></style>
