@@ -68,6 +68,7 @@ const handleLogin = async () => {
       const decodedToken = jwtDecode(data.access_token);
       console.log(decodedToken); 
       const tipoUsuario = decodedToken.tipoUsuario;
+      localStorage.setItem('tipo_usuario', tipoUsuario);
       console.log(tipoUsuario); 
       redirectByUserType(tipoUsuario);
 
@@ -116,8 +117,12 @@ onMounted(() => {
 
       if (res.ok && data.access_token) {
         localStorage.setItem('access_token', data.access_token);
-        const decodedToken = jwtDecode(data.access_token);
-        redirectByUserType(decodedToken.tipoUsuario);
+      const decodedToken = jwtDecode(data.access_token);
+      console.log(decodedToken); 
+      const tipoUsuario = decodedToken.tipoUsuario;
+      localStorage.setItem('tipo_usuario', tipoUsuario);
+      console.log(tipoUsuario); 
+      redirectByUserType(tipoUsuario);
       } else {
         alert('No se pudo autenticar con Google');
       }
