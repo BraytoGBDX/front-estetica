@@ -52,49 +52,49 @@ const router = createRouter({
 });
 
 // 🚀 Guardia Global
-router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('access_token');
-    const tipoUsuario = localStorage.getItem('tipo_usuario');
+// router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('access_token');
+//     const tipoUsuario = localStorage.getItem('tipo_usuario');
   
-    // 🚨 PRIMERO: Ignorar la ruta de error 404
-    if (to.name === 'NotFound') {
-      return next(); // Deja pasar a la página NotFound aunque no tenga token
-    }
+//     // 🚨 PRIMERO: Ignorar la ruta de error 404
+//     if (to.name === 'NotFound') {
+//       return next(); // Deja pasar a la página NotFound aunque no tenga token
+//     }
   
-    // 🛡️ Luego proteges el resto
-    if (!token && to.name !== 'login' && to.name !== 'register' && to.path !== '/recuperar') {
-      return next({ name: 'login' });
-    }
+//     // 🛡️ Luego proteges el resto
+//     if (!token && to.name !== 'login' && to.name !== 'register' && to.path !== '/recuperar') {
+//       return next({ name: 'login' });
+//     }
   
-    if (to.name === 'login' && token) {
-      if (tipoUsuario === 'Administrador') {
-        return next({ name: 'admin-dashboard' });
-      } else if (tipoUsuario === 'Cliente') {
-        return next({ name: 'cliente-dashboard' });
-      } else {
-        localStorage.clear();
-        return next({ name: 'login' });
-      }
-    }
+//     if (to.name === 'login' && token) {
+//       if (tipoUsuario === 'Administrador') {
+//         return next({ name: 'admin-dashboard' });
+//       } else if (tipoUsuario === 'Cliente') {
+//         return next({ name: 'cliente-dashboard' });
+//       } else {
+//         localStorage.clear();
+//         return next({ name: 'login' });
+//       }
+//     }
   
-    if (token) {
-      if (tipoUsuario === 'Administrador') {
-        if (to.name === 'cliente-dashboard' || to.path === '/citasCliente') {
-          return next({ name: 'admin-dashboard' });
-        }
-      } else if (tipoUsuario === 'Cliente') {
-        if (
-          to.name === 'admin-dashboard' ||
-          to.path === '/clientes' ||
-          to.path === '/citas' ||
-          to.path === '/tratamientos'
-        ) {
-          return next({ name: 'cliente-dashboard' });
-        }
-      }
-    }
+//     if (token) {
+//       if (tipoUsuario === 'Administrador') {
+//         if (to.name === 'cliente-dashboard' || to.path === '/citasCliente') {
+//           return next({ name: 'admin-dashboard' });
+//         }
+//       } else if (tipoUsuario === 'Cliente') {
+//         if (
+//           to.name === 'admin-dashboard' ||
+//           to.path === '/clientes' ||
+//           to.path === '/citas' ||
+//           to.path === '/tratamientos'
+//         ) {
+//           return next({ name: 'cliente-dashboard' });
+//         }
+//       }
+//     }
   
-    next();
-  });
+//     next();
+//   });
   
 export default router;
