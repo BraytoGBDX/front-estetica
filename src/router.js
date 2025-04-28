@@ -10,6 +10,7 @@ import Citas from './components/Citas.vue';
 import CitasCliente from './components/CitasCliente.vue';
 import NotFound from './components/NotFound.vue'; // 🛑 Importamos la página de error
 import PerfilCliente from './components/PerfilCliente.vue'
+import RecuperarPassword from './components/RecuperarPassword.vue'
 
 const routes = [
   {
@@ -37,6 +38,8 @@ const routes = [
   { path: '/tratamientos', component: Tratamientos },
   { path: '/citasCliente', component: CitasCliente },
   { path: '/perfil', component: PerfilCliente },
+  { path: '/recuperar', component: RecuperarPassword },
+
 
   
   // ✨ Ruta para manejar cualquier ruta que no exista
@@ -59,7 +62,7 @@ router.beforeEach((to, from, next) => {
     }
   
     // 🛡️ Luego proteges el resto
-    if (!token && to.name !== 'login' && to.name !== 'register') {
+    if (!token && to.name !== 'login' && to.name !== 'register' && to.path !== '/recuperar') {
       return next({ name: 'login' });
     }
   

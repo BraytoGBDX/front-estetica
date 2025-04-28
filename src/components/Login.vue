@@ -19,7 +19,7 @@
       />
 
       <div class="forgot-password">
-        <a href="#">¿Olvidaste tu contraseña?</a>
+        <a href="/recuperar" @click.prevent="goToRecover">¿Olvidaste tu contraseña?</a>
       </div>
 
       <div class="login-buttons">
@@ -71,7 +71,6 @@ const handleLogin = async () => {
       localStorage.setItem('tipo_usuario', tipoUsuario);
       console.log(tipoUsuario); 
       redirectByUserType(tipoUsuario);
-
     } else {
       alert('Credenciales incorrectas');
     }
@@ -100,6 +99,10 @@ const goToRegister = () => {
   router.push({ name: 'register' });
 };
 
+const goToRecover = () => {
+  router.push('/recuperar'); // <- Aquí rediriges a recuperar
+};
+
 onMounted(() => {
   const handleCredentialResponse = async (response) => {
     const id_token = response.credential;
@@ -117,12 +120,12 @@ onMounted(() => {
 
       if (res.ok && data.access_token) {
         localStorage.setItem('access_token', data.access_token);
-      const decodedToken = jwtDecode(data.access_token);
-      console.log(decodedToken); 
-      const tipoUsuario = decodedToken.tipoUsuario;
-      localStorage.setItem('tipo_usuario', tipoUsuario);
-      console.log(tipoUsuario); 
-      redirectByUserType(tipoUsuario);
+        const decodedToken = jwtDecode(data.access_token);
+        console.log(decodedToken); 
+        const tipoUsuario = decodedToken.tipoUsuario;
+        localStorage.setItem('tipo_usuario', tipoUsuario);
+        console.log(tipoUsuario); 
+        redirectByUserType(tipoUsuario);
       } else {
         alert('No se pudo autenticar con Google');
       }
